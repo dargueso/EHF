@@ -39,5 +39,10 @@ Outputs are
 |spell_all|Length of the heatwave in days after the date|days|
 |HWL|Mean duration of heat waves|days|
 
+--------------------------------------
+
+constants.py contains a bunch of constanst that may be used in the calculation.
+HWvariables_info.py contains a dictionary with information on the output variables for reference in the netCDF writing out.
+
 
 *(25/07/2018) NOTE: Now, only the functions are provided. I will update soon a sample script to call them*
