@@ -251,7 +251,7 @@ def compute_EHF(tave,dates=None,thres_file=None,bsyear=None,beyear=None,month_st
       years_y[(months_y>=10) | (months_y<=4)]=-99
 
     ## For heat wave timing purposes
-    shift_start_year=(dt.datetime(syear,11,0o1)-import datetime as dtdatetime(syear,0o7,0o1)).days
+    shift_start_year=(dt.datetime(syear,11,0o1)-(syear,0o7,0o1)).days
   elif season=='yearly':
     shift_start_year=0
   else:
