@@ -79,8 +79,10 @@ def calc_percentile(tave,nyears,thres_file=None,method='NF13',nwindow=15):
         # No percentile file is provided and thus they are calculated from the given data
         print("Percentiles are calculated because no thfile is provided")
         windowrange=np.zeros((365,),dtype=np.bool)
-        windowrange[:np.ceil(nwindow/2)+1]=True
-        windowrange[-np.floor(nwindow/2):]=True
+        windowrange[:np.int(np.ceil(nwindow/2))]=True
+        windowrange[-np.int(np.floor(nwindow/2)):]=True
+        if (np.sum(windowrange)!=nwindow):
+            raise SystemExit(0)
         windowrange=np.tile(windowrange,nyears)
         pct_calc=np.ones((365,)+tave.shape[1:],np.float64)*const.missingval
 
@@ -246,9 +248,9 @@ def compute_EHF(tave,dates=None,thres_file=None,bsyear=None,beyear=None,month_st
     EHF_exceed[(months_y>=4) & (months_y<=10),:,:]=False
     years_y[(months_y>=4) & (months_y<=10)]=-99
 
-    if season=='summer_nh':
-      EHF_exceed[(months_y>=10) | (months_y<=4),:,:]=False
-      years_y[(months_y>=10) | (months_y<=4)]=-99
+  if season=='summer_nh':
+    EHF_exceed[(months_y>=10) | (months_y<=4),:,:]=False
+    years_y[(months_y>=10) | (months_y<=4)]=-99
 
     ## For heat wave timing purposes
     shift_start_year=(dt.datetime(syear,11,0o1)-(syear,0o7,0o1)).days
