@@ -248,12 +248,15 @@ def compute_EHF(tave,dates=None,thres_file=None,bsyear=None,beyear=None,month_st
     EHF_exceed[(months>=4) & (months<=10),:,:]=False
     years[(months>=4) & (months<=10)]=-99
 
+    ## For heat wave timing purposes
+    shift_start_year=(dt.datetime(syear,11,0o1)-dt.datetime(syear,0o7,0o1)).days
+
   elif season=='summer_nh':
     EHF_exceed[(months>=10) | (months<=4),:,:]=False
     years[(months>=10) | (months<=4)]=-99
+    shift_start_year=0
 
-    ## For heat wave timing purposes
-    shift_start_year=(dt.datetime(syear,11,0o1)-(syear,0o7,0o1)).days
+
   elif season=='yearly':
     shift_start_year=0
   else:
