@@ -246,11 +246,11 @@ def compute_EHF(tave,dates=None,thres_file=None,bsyear=None,beyear=None,month_st
   ###### Originally used only in PA13 method
   if season=='summer_sh':
     EHF_exceed[(months>=4) & (months<=10),:,:]=False
-    years_y[(months>=4) & (months<=10)]=-99
+    years[(months>=4) & (months<=10)]=-99
 
   elif season=='summer_nh':
     EHF_exceed[(months>=10) | (months<=4),:,:]=False
-    years_y[(months>=10) | (months<=4)]=-99
+    years[(months>=10) | (months<=4)]=-99
 
     ## For heat wave timing purposes
     shift_start_year=(dt.datetime(syear,11,0o1)-(syear,0o7,0o1)).days
