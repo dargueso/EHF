@@ -8,7 +8,7 @@ class VariablesInfo(object):
                       'description':  'Peak of the hottest heatwave per year - yearly maximum of each heatwave peak',
                       },
         'HWM':  { 'Longname'   :  'Average magnitude of the yearly heatwave',
-                      'units'      :  'deg2',
+                      'units'      :  'degC2',
                       'description':  'Average magnitude of the yearly heatwave - yearly average of heatwave magnitude',
                       },
         'HWN':  { 'Longname'   :  'Number of heatwaves',
