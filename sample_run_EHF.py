@@ -55,8 +55,8 @@ fout = xr.Dataset(
                 {
                     "units": "K2",
                     "long_name": "Peak of the hottest heatwave per year",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -67,8 +67,8 @@ fout = xr.Dataset(
                 {
                     "units": "K2",
                     "long_name": "Average magnitude of the yearly heatwave",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -79,8 +79,8 @@ fout = xr.Dataset(
                 {
                     "units": "days",
                     "long_name": "Number of heatwave days",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -91,8 +91,8 @@ fout = xr.Dataset(
                 {
                     "units": "days",
                     "long_name": "Duration of yearly longest heatwave",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -103,8 +103,8 @@ fout = xr.Dataset(
                 {
                     "units": "day",
                     "long_name": "First heat wave day of the year",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -115,8 +115,8 @@ fout = xr.Dataset(
                 {
                     "units": "days",
                     "long_name": "Mean duration of heat waves",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -127,8 +127,8 @@ fout = xr.Dataset(
                 {
                     "units": "K",
                     "long_name": "Temperature at the peak of the hottest heatwave per year",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -139,8 +139,8 @@ fout = xr.Dataset(
                 {
                     "units": "K",
                     "long_name": "Average temperature for all year heatwaves",
-                    "_FillValue": 1e20,
-                    "missing_value": 1e20,
+                    "_FillValue": const.missingval,
+                    "missing_value": const.missingval,
                 }
             ),
         ),
@@ -167,8 +167,8 @@ if version == "PA13":
                         {
                             "units": "K2",
                             "long_name": "Excessive Heat Factor Index",
-                            "_FillValue": 1e20,
-                            "missing_value": 1e20,
+                            "_FillValue": const.missingval,
+                            "missing_value": const.missingval,
                         }
                     ),
                 ),
@@ -190,8 +190,8 @@ else:
                     {
                         "units": "K2",
                         "long_name": "Excessive Heat Factor Index",
-                        "_FillValue": 1e20,
-                        "missing_value": 1e20,
+                        "_FillValue": const.missingval,
+                        "missing_value": const.missingval,
                     }
                 ),
             ),
