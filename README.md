@@ -46,3 +46,4 @@ HWvariables_info.py contains a dictionary with information on the output variabl
 
 
 *(25/07/2018) NOTE: Now, only the functions are provided. I will update soon a sample script to call them*
+*(30/11/2022) UPDATE: a sample script to call the functions is provided now*
