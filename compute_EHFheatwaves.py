@@ -62,7 +62,7 @@ def calc_percentile(tave, nyears, thres_file=None, method="NF13", nwindow=15):
                 pct_calc = np.percentile(tave, 95, axis=0)
 
             else:
-                pct_calc = np.ones(tave.shape[1:], np.float64) * const.missingval
+                pct_calc = np.ones(tave.shape[1:], float) * const.missingval
                 for i in range(tave.shape[1]):
                     for j in range(tave.shape[2]):
                         aux = tave[:, i, j]
@@ -73,20 +73,20 @@ def calc_percentile(tave, nyears, thres_file=None, method="NF13", nwindow=15):
         else:
             print("Percentiles are retrieved from the thfile provided")
             pct_file = nc.Dataset(thres_file, "r")
-            pct_calc = pct_file.variables["PRCTILE95"][:].astype("float64")
+            pct_calc = pct_file.variables["PRCTILE95"][:].astype("float")
 
     elif method == "PA13":
 
         if thres_file == None:
             # No percentile file is provided and thus they are calculated from the given data
             print("Percentiles are calculated because no thfile is provided")
-            windowrange = np.zeros((365,), dtype=np.bool)
-            windowrange[: np.int(np.ceil(nwindow / 2))] = True
-            windowrange[-np.int(np.floor(nwindow / 2)) :] = True
+            windowrange = np.zeros((365,), dtype=bool)
+            windowrange[: int(np.ceil(nwindow / 2))] = True
+            windowrange[-int(np.floor(nwindow / 2)) :] = True
             if np.sum(windowrange) != nwindow:
                 raise SystemExit(0)
             windowrange = np.tile(windowrange, nyears)
-            pct_calc = np.ones((365,) + tave.shape[1:], np.float64) * const.missingval
+            pct_calc = np.ones((365,) + tave.shape[1:], float) * const.missingval
 
             if not isinstance(tave, np.ma.core.MaskedArray):
                 for d in range(365):
@@ -110,7 +110,7 @@ def calc_percentile(tave, nyears, thres_file=None, method="NF13", nwindow=15):
             print("Percentiles are retrieved from the thfile provided")
             # A percentile file is provided and it contains a PRCTILE90 variable
             pct_file = nc.Dataset(thres_file, "r")
-            pct_calc = pct_file.variables["PRCTILE90"][:].astype("float64")
+            pct_calc = pct_file.variables["PRCTILE90"][:].astype("float")
 
     else:
         raise ValueError("Method not supported: Choose between NF13 or PA13")
@@ -140,7 +140,7 @@ def calc_spell(series):
             b = list(g)
             groups_hw.append(sum(b))
 
-    spell_hw = np.zeros((len(series),), dtype=np.int)
+    spell_hw = np.zeros((len(series),), dtype=int)
     if np.any(srun == 1):
         spell_hw[srun == 1] = np.asarray(groups_hw)
 
@@ -165,7 +165,7 @@ def compute_EHF(
 ):
     """Function to calculate Excess Heat Factor (EHF) heatwaves from tave calcualted as (tmax+tmin)/2."""
     if mask == None:
-        mask = np.ones(tave.shape[1:], np.int)
+        mask = np.ones(tave.shape[1:], int)
 
     # PERFORM SOME CHECKS
     ## This is explicitly checked to preserve compatibility across versions
@@ -220,13 +220,13 @@ def compute_EHF(
         nwindow=15,
     )
 
-    tave_3days = np.zeros(tave.shape, dtype=np.float64)
+    tave_3days = np.zeros(tave.shape, dtype=float)
 
     for t in range(2, ndays):
         tave_3days[t, :, :] = np.mean(tave[t - 2 : t + 1, :, :], axis=0)
 
     if EHFaccl == True:
-        tave_30days = np.zeros(tave.shape, dtype=np.float64)
+        tave_30days = np.zeros(tave.shape, dtype=float)
         for t in range(32, ndays):
             tave_30days[t, :, :] = np.mean(tave[t - 32 : t - 2, :, :], axis=0)
 
@@ -235,7 +235,7 @@ def compute_EHF(
             ### CALCULATING EHIsig and EHIaccl (if required)
 
     if method == "PA13":
-        EHIsig = np.zeros(tave.shape, dtype=np.float64)
+        EHIsig = np.zeros(tave.shape, dtype=float)
         for t in range(ndays):
             EHIsig[t, :, :] = tave_3days[t, :, :] - pct[(t) % 365, :, :]
     else:
@@ -254,7 +254,7 @@ def compute_EHF(
         EHF = EHIsig
     EHF[EHF < 0] = 0
 
-    EHF_exceed = np.zeros(EHF.shape, dtype=np.int)
+    EHF_exceed = np.zeros(EHF.shape, dtype=int)
     EHF_exceed[EHF > 0] = 1
 
     if EHFaccl == True:
@@ -284,10 +284,10 @@ def compute_EHF(
         )
 
         # Defining variables for heat wave and spell calculation
-    heatwave_EHF_avg = np.ones(tave.shape, dtype=np.float64) * const.missingval
-    heatwave_EHF_peak = np.ones(tave.shape, dtype=np.float64) * const.missingval
-    heatwave_EHF = np.zeros(tave.shape, dtype=np.bool)
-    spell_all = np.zeros(tave.shape, dtype=np.int)
+    heatwave_EHF_avg = np.ones(tave.shape, dtype=float) * const.missingval
+    heatwave_EHF_peak = np.ones(tave.shape, dtype=float) * const.missingval
+    heatwave_EHF = np.zeros(tave.shape, dtype=bool)
+    spell_all = np.zeros(tave.shape, dtype=int)
 
     for ilat in range(nlat):
         for ilon in range(nlon):
@@ -316,15 +316,15 @@ def compute_EHF(
     tave_peak_masked = np.ma.masked_where(heatwave_EHF_peak.mask, tave_3days)
     tave_avg_masked = np.ma.masked_where(heatwave_EHF_avg.mask, tave_3days)
 
-    HWA = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWM = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWN = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWF = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWD = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWT = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWMt = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWAt = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
-    HWL = np.ones((nyears,) + tave.shape[1:], np.float64) * const.missingval
+    HWA = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWM = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWN = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWF = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWD = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWT = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWMt = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWAt = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
+    HWL = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
 
     for yr in range(nyears):
         year = yr + syear
@@ -333,7 +333,7 @@ def compute_EHF(
         HWF[yr, :, :] = (
             np.sum(spell_all[new_years == year, :, :], axis=0)
             * 100.0
-            / np.float(np.sum(new_years == year))
+            / float(np.sum(new_years == year))
         )
         HWN[yr, :, :] = np.sum(spell_all[new_years == year, :, :] != 0, axis=0)
         HWD[yr, :, :] = np.max(spell_all[new_years == year, :, :], axis=0)
