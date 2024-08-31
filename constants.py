@@ -26,7 +26,7 @@ class const:
     p1000mb = 100000.0
     rcp = Rd / cp
     tkelvin = 273.15
-    missingval = -9999.0
+    missingval = 1e20
     kappa = (cp - cv) / cp
     L = 2.501e6  # latent heat of vaporization
     # Constants used to calcualte moist adiabatic lapse rate
