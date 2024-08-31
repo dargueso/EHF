@@ -5,6 +5,8 @@ Python code to calculate Excess Heat Factor and derived heatwave metrics
 Daniel Argüeso @ University of New South Wales
 email: d.argueso@unsw.edu.au
 
+Contributors: Annette Hirsch (UNSW), Clemente López Bravo (UNSW)
+
 This is a Python 3 code to calculate Excess Heat Factor and heatwave metrics on a temperature array (time,lat,lon).
 
 The main function is located in compute_EHFheatwaves.py and is called compute_EHF
