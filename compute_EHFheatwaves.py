@@ -59,7 +59,7 @@ def calc_percentile(tave, nyears, thres_file=None, method="NF13", nwindow=15):
             print("No thresholds file provided, we will calculate them")
 
             if not isinstance(tave, np.ma.core.MaskedArray):
-                pct_calc = np.percentile(tave, 95, axis=0)
+                pct_calc = np.nanpercentile(tave, 95, axis=0)
 
             else:
                 pct_calc = np.ones(tave.shape[1:], float) * const.missingval
@@ -67,7 +67,7 @@ def calc_percentile(tave, nyears, thres_file=None, method="NF13", nwindow=15):
                     for j in range(tave.shape[2]):
                         aux = tave[:, i, j]
                         if len(aux[~aux.mask].data) != 0:
-                            pct_calc[i, j] = np.percentile(
+                            pct_calc[i, j] = np.nanpercentile(
                                 aux[~aux.mask].data, 95, axis=0
                             )
         else:
