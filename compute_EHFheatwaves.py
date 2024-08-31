@@ -286,6 +286,8 @@ def compute_EHF(
         # Defining variables for heat wave and spell calculation
     heatwave_EHF_avg = np.ones(tave.shape, dtype=float) * const.missingval
     heatwave_EHF_peak = np.ones(tave.shape, dtype=float) * const.missingval
+    heatwave_TMP3D_peak = np.ones(tave.shape, dtype=float) * const.missingval 
+    heatwave_TMP3D_ave = np.ones(tave.shape, dtype=float) * const.missingval 
     heatwave_EHF = np.zeros(tave.shape, dtype=bool)
     spell_all = np.zeros(tave.shape, dtype=int)
 
@@ -302,10 +304,17 @@ def compute_EHF(
                         heatwave_EHF_peak[t, ilat, ilon] = np.max(
                             EHF[t : t + spell[t], ilat, ilon]
                         )
+                        heatwave_TMP3D_peak[t, ilat, ilon] = np.max(
+                            tave_3days[t : t + spell[t], ilat, ilon]
+                        )                                               
+                        heatwave_TMP3D_ave[t, ilat, ilon] = np.mean(
+                            tave_3days[t : t + spell[t], ilat, ilon]
+                        )                                               
                         heatwave_EHF[t : t + spell[t], ilat, ilon] = EHF_exceed[
                             t : t + spell[t], ilat, ilon
                         ]
-
+                        
+                
                 spell_all[:, ilat, ilon] = spell
 
     ### PULLING OUT HW CHARACTERISTICS
@@ -313,8 +322,9 @@ def compute_EHF(
     heatwave_EHF_avg = np.ma.masked_equal(heatwave_EHF_avg, const.missingval)
     heatwave_EHF_peak = np.ma.masked_equal(heatwave_EHF_peak, const.missingval)
 
-    tave_peak_masked = np.ma.masked_where(heatwave_EHF_peak.mask, tave_3days)
-    tave_avg_masked = np.ma.masked_where(heatwave_EHF_avg.mask, tave_3days)
+    tave_peak_masked = np.ma.masked_equal(heatwave_TMP3D_peak, const.missingval) 
+    tave_avg_masked  = np.ma.masked_equal(heatwave_TMP3D_ave, const.missingval)  
+
 
     HWA = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
     HWM = np.ones((nyears,) + tave.shape[1:], float) * const.missingval
